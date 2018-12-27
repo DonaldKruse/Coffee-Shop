@@ -1,1 +1,1 @@
-This is a coffee shop
+This will be a coffee shop simulator/game
