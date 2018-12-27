@@ -1,5 +1,8 @@
 #include "Person.h"
+#include "Item.h"
 #include <string>
+#include <map>
+#include <iostream>
 
 // -- implementation --
 
@@ -56,7 +59,36 @@ void Person::inc_age() {
     ++_age;
 }
 
+// -- functions for bag --
 
+void Person::add_item(Item it) {
+    if (_bag.size() < _max_bag_size) {
+        _bag.insert(std::make_pair(it.get_name(), it));
+    } else {
+        std::cout << "Failed to add " << it.get_name() << " to "
+                  << _name <<"'s  bag." << std::endl;
+    }
+}
+
+void Person::remove_item(Item it) {
+    auto search = _bag.find(it.get_name());
+    if ( _bag.size() > 0 && search != _bag.end() ) {
+        _bag.erase(it.get_name());
+    } else {
+        std::cout << "Failed to remove " << it.get_name() << " from "
+                  << _name <<"'s  bag." << std::endl;
+    }
+}
+
+void Person::remove_item(std::string it_name) {
+    auto search = _bag.find(it_name);
+    if ( _bag.size() > 0 && search != _bag.end() ) {
+        _bag.erase(it_name);
+    } else {
+        std::cout << "Failed to remove " << it_name << " from "
+                  << _name <<"'s  bag." << std::endl;
+    }
+}
 
 Person::~Person() {}
 

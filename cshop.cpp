@@ -55,6 +55,18 @@ int main(int argc, char* argv[]) {
                   << " and takes " << item->get_work() << " work."
                   << std::endl;
     }
+    Person baggy = Person("Baggy", 123, other, 0.0);
+    std::cout << "Hello my name is "+baggy.get_name()+"." << std::endl;
+    std::cout << "I will add 2 items to my bag..." << std::endl;
+    baggy.add_item(Item("thing", "a simple thing", 0.5, 0.1));
+    baggy.add_item(Item("doodad", "a simple doodad", 0.3, 0.4));
+    baggy.add_item(Item("foobar", "a complex baz", 15.0, 200));
+
+    std::cout << "I will delete the items from my bag" << std::endl;
+    baggy.remove_item("thing");
+    baggy.remove_item("doodad");
+    baggy.remove_item("foobar");
+
     return 0;
 }
 
