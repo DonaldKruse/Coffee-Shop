@@ -15,9 +15,8 @@ class Person {
         unsigned int _age;
         Gender _gender;
         double _money = 0.0;
-        // TODO add container for Item
         // TODO determine if bag is its own class
-        const unsigned int _max_bag_size = 2;
+        unsigned int _bag_size = 2;
         std::map<std::string, Item> _bag;
 
     public:
@@ -26,7 +25,8 @@ class Person {
         Person (const std::string name, 
                 unsigned int age, 
                 Gender gender,
-                double money = 0.0);
+                double money=0.0,
+                unsigned int bag_size=2);
         Person(const Person &); // copy constructor
         
         // getters
@@ -45,6 +45,7 @@ class Person {
         void add_item(Item it);
         void remove_item(Item it);
         void remove_item(std::string it_name);
+        unsigned int get_bag_size();
         // TODO add a view_items function
 
         // TODO add a give item that takes Person p1 and Person p2 and 

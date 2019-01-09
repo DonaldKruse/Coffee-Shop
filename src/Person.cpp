@@ -11,8 +11,16 @@ Person::Person() : _name(""), _age(-1), _gender(nil) {}
 Person::Person (const std::string name, 
                 unsigned int age, 
                 Gender gender, 
-                double money) :
-    _name(name), _age(age), _gender(gender), _money(money) {};
+                double money,
+                unsigned int bag_size) :
+    
+                _name(name),
+                _age(age),
+                _gender(gender),
+                _money(money),
+                _bag_size(bag_size) 
+                {}
+
 
 // copy constructor
 Person::Person(const Person & p) {
@@ -20,6 +28,8 @@ Person::Person(const Person & p) {
     _age = p._age;
     _gender = p._gender;
     _money = p._money;
+    _bag_size = p._bag_size;
+    _bag = p._bag;
 }
 
 // -- Getters --
@@ -62,7 +72,7 @@ void Person::inc_age() {
 // -- functions for bag --
 
 void Person::add_item(Item it) {
-    if (_bag.size() < _max_bag_size) {
+    if (_bag.size() < _bag_size) {
         _bag.insert(std::make_pair(it.get_name(), it));
     } else {
         std::cout << "Failed to add " << it.get_name() << " to "
@@ -89,6 +99,12 @@ void Person::remove_item(std::string it_name) {
                   << _name <<"'s  bag." << std::endl;
     }
 }
+
+unsigned int Person::get_bag_size() {
+    return _bag_size;
+}
+
+
 
 Person::~Person() {}
 
