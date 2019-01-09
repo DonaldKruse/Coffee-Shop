@@ -39,6 +39,7 @@ class Graph {
         //      for example std::unordered_map has average constant-time complexity
         //      for lookup, insert, etc...
 
+        // TODO methods for intersection and unions of graphs
 
         // TODO destructor
 }
