@@ -62,10 +62,10 @@ int main(int argc, char* argv[]) {
     baggy.add_item(Item("doodad", "a simple doodad", 0.3, 0.4));
     baggy.add_item(Item("foobar", "a complex baz", 15.0, 200));
 
-    std::cout << "I will delete the items from my bag" << std::endl;
-    baggy.remove_item("thing");
-    baggy.remove_item("doodad");
-    baggy.remove_item("foobar");
+    //std::cout << "I will delete the items from my bag" << std::endl;
+    //baggy.remove_item("thing");
+    //baggy.remove_item("doodad");
+    //baggy.remove_item("foobar");
 
     return 0;
 }
