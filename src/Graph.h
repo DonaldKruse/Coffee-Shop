@@ -6,22 +6,40 @@
 #include <map>
 
 struct vertex {
-    int label;
-    bool is_chair;
-    bool is_chair_occupied;
-    Person * person; // person (or nemo) in the chair
-    std::string vert_name;
+    int label;        // unique ID for the node
+    bool is_chair;    // is this node a chair
+    bool is_occupied; // is the chair occupied
+    Person * person;  // if occupied, the person (or nemo) in the chair
+    std::string name; // optional name for the node
+
+    // constructor
+    vertex(int vlabel,
+           bool vis_chair,
+           bool vis_occupied,
+           Person * vperson,
+           std::string vname) :
+
+           label(vlabel),
+           is_chair(vis_chair),
+           is_occupied(vis_occupied),
+           person(vperson),
+           name(vname)
+           {}
 };
 
-// node and list of verts
-typedef node_and_verts std::map< int, std::vector<vertex> >;
+// adjacency list
+typedef adjacency_list std::map< vertex, std::vector<vertex> >;
 
 class Graph {
     private:
-        // TODO
-        // need: node_and_verts (above)
-        // need: basic info for size and other metrics
-
+        //node_and_verts defined above
+        adjacency_list al;
+        
+        // basic info for size and other metrics
+        unsigned int num_nodes;
+        unsigned int num_chairs;
+        unsigned int num_chairs_occupied;
+        unsigned int num_persons; // number of Person objs graph obj points to
     public:
         // TODO
         // general constructors
