@@ -33,13 +33,13 @@ typedef adjacency_list std::map< vertex, std::vector<vertex> >;
 class Graph {
     private:
         //node_and_verts defined above
-        adjacency_list al;
+        adjacency_list _al;
         
         // basic info for size and other metrics
-        unsigned int num_nodes;
-        unsigned int num_chairs;
-        unsigned int num_chairs_occupied;
-        unsigned int num_persons; // number of Person objs graph obj points to
+        unsigned int _num_nodes;
+        unsigned int _num_chairs;
+        unsigned int _num_chairs_occupied;
+        unsigned int _num_persons; // number of Person objs graph obj points to
     public:
         // TODO
         // general constructors
