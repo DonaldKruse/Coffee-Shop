@@ -33,4 +33,44 @@ Graph::Graph(GraphRepresenter graph) {
     _num_persons = numpersons;
 }
 
+
+void Graph::get_num_nodes() {
+    return _num_nodes;
+}
+
+
+void Graph::get_num_chairs() {
+    return _num_chairs;
+}
+
+
+void Graph::get_num_chairs_occupied() {
+    return _num_chairs_occupied;
+}
+
+
+void Graph:get_num_persons() {
+    return _num_persons;
+}
+
+
+std::vector<Vertex> Graph::get_nodes() {
+    std::vector<Vertex> nodes;
+
+    for (auto it = _graph.begin(); it != _graph.end(); it++) {
+        nodes.push_back(it->first);
+    }
+   
+    return nodes;
+}
+
+
+GraphRepresenter Graph::get_graph_representer() {
+    return _graph;
+}
+
+
+bool Graph::are_neighbors(Vertex v1, Vertex v2) {
+
+    
 Graph::~Graph() {}

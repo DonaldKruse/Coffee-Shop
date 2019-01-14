@@ -71,29 +71,7 @@ class Graph {
         void get_num_persons();
 
         void get_nodes();
-
-
-        // TODO(DonaldKruse): check to make sure this is an adequate prototype
-        /* add_adjlist_to_graph
-         *
-         * input new_adjlists: a GraphRepresenter that will be merged
-         *                    with this Graph's _graph
-         *
-         * output: void
-         *
-         * exceptions: TODO(DonaldKruse):
-         *
-         * Notes: This method does not check for any correctness of
-         *        of the graph, but copies the contents of
-         *        new_adjlist to this._graph then performs
-         *        and update on the number of nodes, persons, etc...
-         *
-         */
-        //void add_adjlists_to_graph(GraphRepresenter new_adjlists);
-
-
-        // TODO(DonaldKruse): ops on single given node in graph
-        std::vector<Vertex> get_neighbors(Vertex vertex);
+        GraphRepresenter get_graph_representer();
 
 
         // TODO(DonaldKruse): test for adjacency between two nodes
