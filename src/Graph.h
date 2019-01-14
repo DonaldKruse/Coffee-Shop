@@ -3,17 +3,9 @@
 
 #include <string>
 #include <vector>
-#include <unordered_map>
-#include <map>
+#include <utility> // std::pair
 
-
-// adjacency list for a single Vertex 
-typedef adjacency_list std::unordered_map< Vertex, std::vector<Vertex> >;
-
-
-// This is the actual representation of the graph -- a list of adjacency lists.
-// Order somewhat matters. May change later.
-typedef graph_representer std::map< Vertex, adjacency_list >;
+#include "Person.h"
 
 
 /* a Vertex that is used in the Graph class
@@ -41,22 +33,22 @@ struct Vertex {
            person (vperson),
            name (vname)
            {}
-
-    // operator overloading -- necessary if the struct is a key in a map
-    bool const operator==(const Vertex &v) const {
-        return label == v.label;
-    }
-
-    bool const operator<(const Vertex &v) const {
-        return label < v.label ;
 };
+
+// adjacency list for a single Vertex 
+typedef std::pair< Vertex, std::vector<Vertex> > AdjacencyList;
+
+
+// This is the actual representation of the graph -- a list of adjacency lists.
+// Order somewhat matters. May change later.
+typedef std::vector< Vertex, adjacency_list > GraphRepresenter;
 
 
 // TODO(DonaldKruse):
 // Documentation on this class
 class Graph {
     private:
-        graph_representer _graph;
+        GraphRepresenter _graph;
         
         // basic info for size and other metrics
         unsigned int _num_nodes;
@@ -64,10 +56,10 @@ class Graph {
         unsigned int _num_chairs_occupied;
         unsigned int _num_persons; // number of Person objs that exists in the  graph
         
-        // TODO
+        // TODO(DonaldKruse):
         // union and intersection methods (if needed) should be private
         
-        // TODO
+        // TODO(DonaldKruse):
         // update on number of nodes, chairs, persons, etc...
         
 
@@ -75,25 +67,25 @@ class Graph {
         // general constructors
         //
         Graph();
-        Graph(graph_representer & graph);
+        Graph(GraphRepresenter & graph);
 
         // getters and setters for vertices, edges
         //
-        adjacency_list * get_adjlist ();    // dangerous
+        AdjacencyList * get_adjlist ();    // dangerous
         void get_num_nodes ();
         void get_num_chairs ();
         void get_num_chairs_occupied ();
         void get_num_persons ();
 
-        // TODO -- check to make sure this is an adequate prototype
+        // TODO(DonaldKruse): check to make sure this is an adequate prototype
         /* add_adjlist_to_graph
          *
-         * input new_adjlists: an graph_representer that will be merged
+         * input new_adjlists: a GraphRepresenter that will be merged
          *                    with this Graph's _graph
          *
          * output: void  
          *
-         * exceptions: TODO
+         * exceptions: TODO(DonaldKruse):
          *
          * Notes: This method does not check for any correctness of
          *        of the graph, but copies the contents of 
@@ -101,24 +93,24 @@ class Graph {
          *        and update on the number of nodes, persons, etc...
          *
          */
-        //void add_adjlists_to_graph(graph_representer new_adjlists);
+        //void add_adjlists_to_graph(GraphRepresenter new_adjlists);
 
         
-        // TODO ops on single given node in graph
+        // TODO(DonaldKruse): ops on single given node in graph
         //    list of neighbors
         //    what kind of node
 
-        // TODO test for adjacency between two nodes
+        // TODO(DonaldKruse): test for adjacency between two nodes
     
-        // TODO insert and delete for nodes and edges
+        // TODO(DonaldKruse): insert and delete for nodes and edges
      
-        // TODO determine how and when to use a sparse matrix/data struct
+        // TODO(DonaldKruse): determine how and when to use a sparse matrix/data struct
         //      for example std::unordered_map has average constant-time complexity
         //      for lookup, insert, etc...
 
-        // TODO methods for intersection and unions of graphs
+        // TODO(DonaldKruse): methods for intersection and unions of graphs
  
-        // TODO destructor
+        // TODO(DonaldKruse): destructor
         ~Graph();
 }
 
