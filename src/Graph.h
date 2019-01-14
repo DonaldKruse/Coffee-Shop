@@ -7,21 +7,21 @@
 #include <map>
 
 
-// adjacency list for a single vertex 
-typedef adjacency_list std::unordered_map< vertex, std::vector<vertex> >;
+// adjacency list for a single Vertex 
+typedef adjacency_list std::unordered_map< Vertex, std::vector<Vertex> >;
 
 
 // This is the actual representation of the graph -- a list of adjacency lists.
 // Order somewhat matters. May change later.
-typedef graph_representer std::map< vertex, adjacency_list >;
+typedef graph_representer std::map< Vertex, adjacency_list >;
 
 
-/* a vertex that is used in the Graph class
+/* a Vertex that is used in the Graph class
  *
  * Should only contain public data and no
  * information about neighbors, connections, etc.
  */
-struct vertex {
+struct Vertex {
     unsigned int label;   // unique ID for the node -- starts from zero
     bool is_chair;        // is this node a chair
     bool is_occupied;     // is the chair occupied
@@ -29,7 +29,7 @@ struct vertex {
     std::string name;     // optional name for the node
 
     // constructor
-    vertex(unsigned int vlabel,
+    Vertex(unsigned int vlabel,
            bool vis_chair,
            bool vis_occupied,
            Person * vperson,
@@ -41,6 +41,14 @@ struct vertex {
            person (vperson),
            name (vname)
            {}
+
+    // operator overloading -- necessary if the struct is a key in a map
+    bool const operator==(const Vertex &v) const {
+        return label == v.label;
+    }
+
+    bool const operator<(const Vertex &v) const {
+        return label < v.label ;
 };
 
 
