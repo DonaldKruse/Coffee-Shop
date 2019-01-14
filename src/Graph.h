@@ -1,10 +1,20 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef GRAPH_H_
+#define GRAPH_H_
 
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include <map>
+
+
+// adjacency list for a single vertex 
+typedef adjacency_list std::unordered_map< vertex, std::vector<vertex> >;
+
+
+// This is the actual representation of the graph -- a list of adjacency lists.
+// Order somewhat matters. May change later.
+typedef graph_representer std::map< vertex, adjacency_list >;
+
 
 /* a vertex that is used in the Graph class
  *
@@ -33,15 +43,8 @@ struct vertex {
            {}
 };
 
-// adjacency list for a single vertex 
-typedef adjacency_list std::unordered_map< vertex, std::vector<vertex> >;
 
-// This is the actual representation of the graph -- a list of adjacency lists.
-// Order somewhat matters. May change later.
-typedef graph_representer std::map< vertex, adjacency_list >;
-
-
-// TODO
+// TODO(DonaldKruse):
 // Documentation on this class
 class Graph {
     private:
@@ -64,11 +67,11 @@ class Graph {
         // general constructors
         //
         Graph();
-        Graph(adjacency_list & adjlist) : _adjlist(adjlist) {};
+        Graph(graph_representer & graph);
 
         // getters and setters for vertices, edges
         //
-        adjacency_list * get_adjlist ();             // dangerous
+        adjacency_list * get_adjlist ();    // dangerous
         void get_num_nodes ();
         void get_num_chairs ();
         void get_num_chairs_occupied ();
@@ -90,7 +93,7 @@ class Graph {
          *        and update on the number of nodes, persons, etc...
          *
          */
-        void add_adjlist_to_graph(graph_representer new_adjlists);
+        //void add_adjlists_to_graph(graph_representer new_adjlists);
 
         
         // TODO ops on single given node in graph
@@ -108,6 +111,7 @@ class Graph {
         // TODO methods for intersection and unions of graphs
  
         // TODO destructor
+        ~Graph();
 }
 
-#endif // GRAPH_H
+#endif // GRAPH_H_
