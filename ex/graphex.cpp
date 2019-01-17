@@ -47,12 +47,12 @@ struct Vertex {
 };
 
 // adjacency list for a single Vertex
-//typedef std::unordered_map< Vertex, std::vector<Vertex> > adjacency_list;
-typedef std::pair< Vertex, std::vector< Vertex > > adjacency_list;
+//typedef std::unordered_map< Vertex, std::vector<Vertex> > AdjacencyList;
+typedef std::pair< Vertex, std::vector< Vertex > > AdjacencyList;
 
 // This is the actual representation of the graph -- a list of adjacency lists.
 // Order somewhat matters. May change later.
-typedef std::vector< adjacency_list > graph_representer;
+typedef std::vector< AdjacencyList > GraphRepresenter;
 
 
 int main() {
@@ -62,12 +62,12 @@ int main() {
     Vertex v3(3, false, false, "three");    
 
     // each node has an adjacency list
-    adjacency_list a1 = std::make_pair(v1 , std::vector<Vertex> {v2,v3} );
-    adjacency_list a2 = std::make_pair(v2 , std::vector<Vertex> {v3,v1} );
-    adjacency_list a3 = std::make_pair(v1 , std::vector<Vertex> {v1,v2} );
+    AdjacencyList a1 = std::make_pair(v1 , std::vector<Vertex> {v2,v3} );
+    AdjacencyList a2 = std::make_pair(v2 , std::vector<Vertex> {v3,v1} );
+    AdjacencyList a3 = std::make_pair(v3 , std::vector<Vertex> {v1,v2} );
 
-    // list of adjacency_list's is a graph
-    graph_representer graph = {a1,a2,a3};
+    // list of AdjacencyList's is a graph
+    GraphRepresenter graph = {a1,a2,a3};
 
     // access the things
     for (auto it = graph.begin(); it != graph.end(); it++ ) {
@@ -95,7 +95,7 @@ int main() {
         std::cout << iter->label << " ";
     std::cout << std::endl;
 
-    // using std::find on vec
+    // -- using std::find on vec --
     std::cout << "Using std::find to find the value '11' in vec..." << std::endl;
     int findval = 11;
     auto result = std::find(vec.begin(), vec.end(), findval);
@@ -108,6 +108,66 @@ int main() {
     } else {
         std::cout << "Vec does NOT contains " << findval << "!" << std::endl;
     }
+
+
+    // -- finding node from GraphRepresenter object --
+
+    std::cout << std::endl;
+    std::cout << "finding vertices with labels 1 and 2 through iteration..." << std::endl;
+    std::cout << std::endl;
+    unsigned int node1 = 1;
+    unsigned int node2 = 2;
+    std::vector<AdjacencyList>::iterator alp1;
+    std::vector<AdjacencyList>::iterator alp2;
+    for ( auto it = graph.begin(); it != graph.end(); it++ ) {
+        std::cout << it->first.label;
+        if ( it->first.label == node1 ) {
+            std::cout << " <--found 1";
+            alp1 = it;
+        }
+        if ( it->first.label == node2 ) {
+            std::cout << " <--found 2";
+            alp2 = it;
+        }
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
+    std::cout << "using std::find_if..." << std::endl;
+
+    auto found1 = std::find_if(graph.begin(), graph.end(),
+                     [&node1](AdjacencyList& elem)
+                             {return node1 == elem.first.label;});
+
+    auto found2 = std::find_if(graph.begin(), graph.end(),
+                     [&node2](AdjacencyList& elem)
+                             {return node2 == elem.first.label;});
+
+    // check if node1 is found
+    if (found1 == graph.end())
+        std::cout<< "node1 not found" << std::endl;
+    else
+        std::cout<< "node1 found" << std::endl;
+
+    // check if node2 is found
+    if (found2 == graph.end())
+        std::cout<< "node2 not found" << std::endl;
+    else
+        std::cout<< "node2 found" << std::endl;
+
+    // check for nonexistant node
+    std::cout << "looking for nonexistant node..." << std::endl;
+    unsigned int node404 = 404;
+    auto found404 = std::find_if(graph.begin(), graph.end(),
+                     [&node404](AdjacencyList& elem)
+                             {return node404 == elem.first.label;});
+
+    // check if node404 is found
+    if (found404 == graph.end())
+        std::cout<< "node404 not found" << std::endl;
+    else
+        std::cout<< "node404 found" << std::endl;
+
+
     return 0;
 }
-

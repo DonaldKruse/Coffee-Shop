@@ -1,45 +1,110 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef GRAPH_H_
+#define GRAPH_H_
 
 #include <string>
 #include <vector>
-#include <map>
+#include <utility> // std::pair
 
-struct vertex {
-    int label;
-    bool is_chair;
-    bool is_chair_occupied;
-    Person * person; // person (or nemo) in the chair
-    std::string vert_name;
+#include "Person.h"
+
+
+/* A Vertex that is used in the Graph class
+ *
+ * Should only contain public data and no
+ * information about neighbors, connections, etc.
+ */
+struct Vertex {
+    unsigned int label;   // unique ID for the node -- starts from zero
+    bool is_chair;        // is this node a chair
+    bool is_occupied;     // is the chair occupied
+    Person * person;      // if occupied, the person (or nemo) in the chair
+    std::string name;     // optional name for the node
+
+    // constructor
+    Vertex(unsigned int vlabel,
+           bool vis_chair,
+           bool vis_occupied,
+           Person * vperson,
+           std::string vname) :
+
+           label(vlabel),
+           is_chair(vis_chair),
+           is_occupied(vis_occupied),
+           person(vperson),
+           name(vname)
+           {}
+
+
+    // -- operator overloading --
+
+
+    //   std::sort
+    bool operator<(const Vertex &v) const {
+        return (label < v.label);
+    }
+    
+    //   std::find
+    bool operator==(const Vertex &v) const {
+        return (label == v.label);
+    }
+    bool operator==(const unsigned int l) const {
+        return (label == l);
+    }
 };
 
-// node and list of verts
-typedef node_and_verts std::map< int, std::vector<vertex> >;
 
+// adjacency list for a single Vertex
+typedef std::pair< Vertex, std::vector<Vertex> > AdjacencyList;
+
+
+// This is the actual representation of the graph -- a list of adjacency lists.
+//
+// This may need to be changed to an unordered map for efficiency later.
+typedef std::vector< AdjacencyList > GraphRepresenter;
+
+
+// TODO(DonaldKruse):
+// Documentation on this class
 class Graph {
     private:
-        // TODO
-        // need: node_and_verts (above)
-        // need: basic info for size and other metrics
+        GraphRepresenter _graph;
 
+        // basic info for size and other metrics
+        unsigned int _num_nodes;
+        unsigned int _num_chairs;
+        unsigned int _num_chairs_occupied;
+        unsigned int _num_persons; // number of Person objs that exists in the  graph
+        Graph();
     public:
-        // TODO
-        // general constructors
-        // getters and setters for nodes, edges
-        
-        // TODO ops on single given node in graph
-        //    list of neighbors
-        //    what kind of node
 
-        // TODO test for adjacency between two nodes
-    
-        // TODO insert and delete for nodes and edges
-     
-        // TODO determine how and when to use a sparse matrix/data struct
+        // general constructor
+        Graph(GraphRepresenter graph);
+
+        // getters and setters for vertices, edges
+        //
+        void get_num_nodes();
+        void get_num_chairs();
+        void get_num_chairs_occupied();
+        void get_num_persons();
+
+        void get_nodes();
+        GraphRepresenter get_graph_representer();
+
+
+        // TODO(DonaldKruse): test for adjacency between two nodes
+        bool are_neighbors(Vertex vertex1, Vertex vertex2);
+
+
+        // TODO(DonaldKruse): insert and delete for nodes and edges
+        void insert_adjlist(AdjacencyList adjlist);
+        void delete_adjlist(AdjacencyList adjlist);
+
+
+        // TODO(DonaldKruse): determine how and when to use a sparse matrix/data struct
         //      for example std::unordered_map has average constant-time complexity
         //      for lookup, insert, etc...
 
-        // TODO methods for intersection and unions of graphs
+        ~Graph();
+};
 
-        // TODO destructor
-}
+#endif // GRAPH_H_
