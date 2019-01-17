@@ -33,6 +33,23 @@ struct Vertex {
            person(vperson),
            name(vname)
            {}
+
+
+    // -- operator overloading --
+
+
+    //   std::sort
+    bool operator<(const Vertex &v) const {
+        return (label < v.label);
+    }
+    
+    //   std::find
+    bool operator==(const Vertex &v) const {
+        return (label == v.label);
+    }
+    bool operator==(const unsigned int l) const {
+        return (label == l);
+    }
 };
 
 
