@@ -55,6 +55,9 @@ typedef std::pair< Vertex, std::vector< Vertex > > AdjacencyList;
 typedef std::vector< AdjacencyList > GraphRepresenter;
 
 
+bool are_neighbors(GraphRepresenter graph, unsigned int node1, unsigned int node2);
+
+
 int main() {
     // make the nodes
     Vertex v1(1, false, false, "one");    
@@ -169,5 +172,62 @@ int main() {
         std::cout<< "node404 found" << std::endl;
 
 
+    // -- test are_neighbors function --
+
+    // make graph
+    // looks like
+    //
+    //    v1---v2---v3
+    //
+    // so only (1,2) and (2,3) are neigbors
+    a1 = std::make_pair(v1, std::vector<Vertex> {v2});
+    a2 = std::make_pair(v2, std::vector<Vertex> {v1, v3});
+    a3 = std::make_pair(v3, std::vector<Vertex> {v2});
+    graph = {a1,a2,a3};
+    
+    // test the function
+    std::cout << "testing are_neighbors function..." << std::endl;
+    std::cout << "graph looks like\n"
+              << " v1----v2----v3" << std::endl;
+    std::cout << "v1 and v2 are " << are_neighbors(graph, 1, 2) << std::endl;
+    std::cout << "v2 and v3 are " << are_neighbors(graph, 2, 3) << std::endl;
+    std::cout << "v1 and v3 are " << are_neighbors(graph, 1, 3) << std::endl;
+
     return 0;
 }
+
+
+bool are_neighbors(GraphRepresenter graph, unsigned int node1, unsigned int node2) {
+    // unary predicates for finding correct adjacency list
+    // needed in std::find_if
+    auto find_node1 = [&node1] (AdjacencyList & adjlist)
+                      {
+                          return node1 == adjlist.first.label;
+                      };
+    auto find_node2 = [&node2] (AdjacencyList & adjlist)
+                      {
+                          return node2 == adjlist.first.label;
+                      };
+
+    // get correct pointers to adjacency list
+    auto p_adjlist1 = std::find_if(graph.begin(), graph.end(), find_node1);
+    auto p_adjlist2 = std::find_if(graph.begin(), graph.end(), find_node2);
+    
+    // if either pointer points to end, impossible neighbors
+    if (p_adjlist1 == graph.end() || p_adjlist2 == graph.end()) {
+        return false;
+    }
+
+    // look for nodes in the adjacency lists
+    auto neighbornode1 = std::find(p_adjlist1->second.begin(), p_adjlist1->second.end(), p_adjlist2->first.label);
+    auto neighbornode2 = std::find(p_adjlist2->second.begin(), p_adjlist2->second.end(), p_adjlist1->first.label);
+
+    // if neither are end pointers, then they are neighbors
+    if (neighbornode1 != p_adjlist1->second.end() && neighbornode2 != p_adjlist2->second.end()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
