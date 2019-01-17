@@ -70,7 +70,7 @@ GraphRepresenter Graph::get_graph_representer() {
 }
 
 
-bool Graph::are_neighbors(Vertex v1, Vertex v2) {
-
+//bool Graph::are_neighbors(Vertex v1, Vertex v2) {
+//}
     
 Graph::~Graph() {}
