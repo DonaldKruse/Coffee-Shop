@@ -82,18 +82,18 @@ class Graph {
 
         // getters and setters for vertices, edges
         //
-        void get_num_nodes();
-        void get_num_chairs();
-        void get_num_chairs_occupied();
-        void get_num_persons();
+        unsigned int get_num_nodes();
+        unsigned int get_num_chairs();
+        unsigned int get_num_chairs_occupied();
+        unsigned int get_num_persons();
 
-        void get_nodes();
+        std::vector<Vertex> get_nodes();
         GraphRepresenter get_graph_representer();
-
+        void print_adjacency_lists();
 
         // TODO(DonaldKruse): test for adjacency between two nodes
         bool are_neighbors(Vertex vertex1, Vertex vertex2);
-
+        bool are_neighbors(unsigned int vertex1, unsigned int vertex2);
 
         // TODO(DonaldKruse): insert and delete for nodes and edges
         void insert_adjlist(AdjacencyList adjlist);
