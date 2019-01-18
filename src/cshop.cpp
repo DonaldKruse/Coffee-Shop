@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
      * Declare vector of Person objects
      * push_back Beth and Donny instances and then display
      */
-    std::cout << "Testing class Person..." << std::endl;    
+    std::cout << "Testing class Person..." << std::endl;
     std::vector<Person> people;
     people.push_back(Person("Donny", 27, male));
     people.push_back(Person("Beth", 24, female));
@@ -32,20 +32,20 @@ int main(int argc, char* argv[]) {
     beth2.set_name("beth2");
     std::cout << "Name: " << beth2.get_name() << std::endl;
     std::cout << "Inc age: " << std::endl;
-    beth2.inc_age();
+    beth2.increment_age();
     std::cout << "Age: " << beth2.get_age() << std::endl;
     std::cout << "set age: " << std::endl;
-    beth2.set_age(24); 
+    beth2.set_age(24);
     std::cout << "Age: " << beth2.get_age() << std::endl;
     std::cout << "Set gender: " << std::endl;
     beth2.set_gender(other);
     std::cout << "Gender: " << beth2.get_gender() << std::endl;
 
     // Test class Item in same way as class Person
-    std::cout << "Testing class Item..." << std::endl;    
+    std::cout << "Testing class Item..." << std::endl;
     std::vector<Item> items;
-    items.push_back( Item("small coffee", "A small coffe without cream or sugar",
-                           1.95, 0.2) );
+    items.push_back(Item("small coffee", "A small coffe without cream or sugar",
+                           1.95, 0.2));
     for (auto item = items.begin(); item != items.end(); item++) {
         std::cout << "This item is a "
                   << item->get_name()
@@ -57,15 +57,15 @@ int main(int argc, char* argv[]) {
     }
     Person baggy = Person("Baggy", 123, other, 0.0);
     std::cout << "Hello my name is "+baggy.get_name()+"." << std::endl;
-    std::cout << "I will add 2 items to my bag..." << std::endl;
+    std::cout << "I will add 3 items to my bag..." << std::endl;
     baggy.add_item(Item("thing", "a simple thing", 0.5, 0.1));
     baggy.add_item(Item("doodad", "a simple doodad", 0.3, 0.4));
-    baggy.add_item(Item("foobar", "a complex baz", 15.0, 200));
+    baggy.add_item(Item("foobar", "a complex baz", 15.0, 200));  // default bag size is 2
 
-    //std::cout << "I will delete the items from my bag" << std::endl;
-    //baggy.remove_item("thing");
-    //baggy.remove_item("doodad");
-    //baggy.remove_item("foobar");
+    std::cout << "I will delete the items from my bag" << std::endl;
+    baggy.remove_item("thing");
+    baggy.remove_item("doodad");
+    baggy.remove_item("foobar");  // no more items in bag
 
     return 0;
 }
