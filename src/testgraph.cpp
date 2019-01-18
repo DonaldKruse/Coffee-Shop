@@ -62,7 +62,7 @@ int main() {
         printf("v1 and v3 are neighbors\n");
     else
         printf("v1 and v3 are NOT neighbors\n");
-    
+  
     // test edge case for neighbors
     bool v1_4 = graph2.are_neighbors(1,4);
     if (v1_4)
