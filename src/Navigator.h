@@ -1,5 +1,5 @@
-#ifndef NAVIGATOR_H
-#define NAVIGATOR_H
+#ifndef NAVIGATOR_H_
+#define NAVIGATOR_H_
 
 // File: navigator.h
 // Purpose: Class implementing Dijkstra's Algorithm for finding the shortest path in a graph.
@@ -21,6 +21,8 @@ class Navigator : Graph {
     // Destructor
     ~Navigator();
 
-    // Returns a list of vertices representing the shortest path from X to Y.
-    std::list<vertex> search(vertex *X, vertex *Y);
+    // Returns a list of vertices representing the shortest path from start to finish.
+    std::list<vertex> search(vertex *start, vertex *finish);
 }
+
+#endif  // NAVIGATOR_H_
