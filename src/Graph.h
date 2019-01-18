@@ -3,8 +3,7 @@
 
 #include <string>
 #include <vector>
-#include <utility> // std::pair
-
+#include <utility>  // std::pair
 #include "Person.h"
 
 
@@ -19,6 +18,7 @@ struct Vertex {
     bool is_occupied;     // is the chair occupied
     Person * person;      // if occupied, the person (or nemo) in the chair
     std::string name;     // optional name for the node
+
 
     // constructor
     Vertex(unsigned int vlabel,
@@ -42,7 +42,7 @@ struct Vertex {
     bool operator<(const Vertex &v) const {
         return (label < v.label);
     }
-    
+
     //   std::find
     bool operator==(const Vertex &v) const {
         return (label == v.label);
@@ -63,8 +63,10 @@ typedef std::pair< Vertex, std::vector<Vertex> > AdjacencyList;
 typedef std::vector< AdjacencyList > GraphRepresenter;
 
 
-// TODO(DonaldKruse):
-// Documentation on this class
+/*
+ *  Graph provides the basic structure and data for
+ *  a graph object.
+ */
 class Graph {
     private:
         GraphRepresenter _graph;
@@ -73,27 +75,28 @@ class Graph {
         unsigned int _num_nodes;
         unsigned int _num_chairs;
         unsigned int _num_chairs_occupied;
-        unsigned int _num_persons; // number of Person objs that exists in the  graph
+        unsigned int _num_persons;  // number of Person objs that exists in the  graph
         Graph();
-    public:
 
+    public:
         // general constructor
-        Graph(GraphRepresenter graph);
+        explicit Graph(GraphRepresenter graph);
+        // TODO(DonaldKruse): add copy constructor
 
         // getters and setters for vertices, edges
-        //
         unsigned int get_num_nodes();
         unsigned int get_num_chairs();
         unsigned int get_num_chairs_occupied();
         unsigned int get_num_persons();
-
         std::vector<Vertex> get_nodes();
         GraphRepresenter get_graph_representer();
-        void print_adjacency_lists();
 
-        // TODO(DonaldKruse): test for adjacency between two nodes
+
+        // utilities
         bool are_neighbors(Vertex vertex1, Vertex vertex2);
         bool are_neighbors(unsigned int vertex1, unsigned int vertex2);
+        void print_adjacency_lists();
+
 
         // TODO(DonaldKruse): insert and delete for nodes and edges
         void insert_adjlist(AdjacencyList adjlist);
@@ -107,4 +110,4 @@ class Graph {
         ~Graph();
 };
 
-#endif // GRAPH_H_
+#endif  // GRAPH_H_
