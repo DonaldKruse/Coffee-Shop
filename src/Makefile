@@ -15,5 +15,8 @@ counter.o:  Item.cpp Item.h
 scanner.o:  Person.cpp Person.h 
 	$(CC) $(CFLAGS) -c Person.cpp
 
+navigator.o:  Navigator.cpp Navigator.h       
+	$(CC) $(CFLAGS) -c Navigator.cpp
+
 clean: 
 	$(RM) count *.o *~
