@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <utility> // std::pair
 
-
 /* a Vertex that is used in the Graph class
  *
  * Should only contain public data and no
@@ -47,15 +46,21 @@ struct Vertex {
 };
 
 // adjacency list for a single Vertex
-//typedef std::unordered_map< Vertex, std::vector<Vertex> > AdjacencyList;
-typedef std::pair< Vertex, std::vector< Vertex > > AdjacencyList;
+typedef std::pair<Vertex, double> PairVertexWeight;
+typedef std::pair<Vertex, std::vector<PairVertexWeight>> AdjacencyList;
 
 // This is the actual representation of the graph -- a list of adjacency lists.
 // Order somewhat matters. May change later.
-typedef std::vector< AdjacencyList > GraphRepresenter;
+typedef std::vector<AdjacencyList> GraphRepresenter;
 
 
 bool are_neighbors(GraphRepresenter graph, unsigned int node1, unsigned int node2);
+
+
+void add_adjacencylist(GraphRepresenter & graph, AdjacencyList adjlist);
+
+
+AdjacencyList make_adjlist(Vertex, std::vector<Vertex> vertlist, std::vector<double> weightlist);
 
 
 int main() {
@@ -65,10 +70,11 @@ int main() {
     Vertex v3(3, false, false, "three");    
 
     // each node has an adjacency list
-    AdjacencyList a1 = std::make_pair(v1 , std::vector<Vertex> {v2,v3} );
-    AdjacencyList a2 = std::make_pair(v2 , std::vector<Vertex> {v3,v1} );
-    AdjacencyList a3 = std::make_pair(v3 , std::vector<Vertex> {v1,v2} );
+    AdjacencyList a1 = make_adjlist(v1, std::vector<Vertex> {v2, v3}, std::vector<double> {1.0, 2.0});
+    AdjacencyList a2 = make_adjlist(v2, std::vector<Vertex> {v1, v3}, std::vector<double> {1.0, 2.0});
+    AdjacencyList a3 = make_adjlist(v3, std::vector<Vertex> {v2, v1}, std::vector<double> {1.0, 2.0});
 
+    
     // list of AdjacencyList's is a graph
     GraphRepresenter graph = {a1,a2,a3};
 
@@ -78,7 +84,7 @@ int main() {
         auto val2 = it->second;
         std::cout << "first: " << val1.label << "; second (get size of vector): " << val2.size() << std::endl;
     }
-
+    
     // use std::sort on a vector of structs
     Vertex v10(10, false, false, "");
     Vertex v11(11, false, false, "");
@@ -180,9 +186,9 @@ int main() {
     //    v1---v2---v3
     //
     // so only (1,2) and (2,3) are neigbors
-    a1 = std::make_pair(v1, std::vector<Vertex> {v2});
-    a2 = std::make_pair(v2, std::vector<Vertex> {v1, v3});
-    a3 = std::make_pair(v3, std::vector<Vertex> {v2});
+    a1 = make_adjlist(v1, std::vector<Vertex> {v2}, std::vector<double> {2.0});
+    a2 = make_adjlist(v2, std::vector<Vertex> {v1, v3}, std::vector<double> {1.0, 2.0});
+    a3 = make_adjlist(v3, std::vector<Vertex> {v2}, std::vector<double> {2.0});
     graph = {a1,a2,a3};
     
     // test the function
@@ -196,7 +202,7 @@ int main() {
     return 0;
 }
 
-
+/*
 bool are_neighbors(GraphRepresenter graph, unsigned int node1, unsigned int node2) {
     // unary predicates for finding correct adjacency list
     // needed in std::find_if
@@ -219,15 +225,34 @@ bool are_neighbors(GraphRepresenter graph, unsigned int node1, unsigned int node
     }
 
     // look for nodes in the adjacency lists
-    auto neighbornode1 = std::find(p_adjlist1->second.begin(), p_adjlist1->second.end(), p_adjlist2->first.label);
-    auto neighbornode2 = std::find(p_adjlist2->second.begin(), p_adjlist2->second.end(), p_adjlist1->first.label);
+    auto neighbornode1 = std::find(p_adjlist1->second.first.begin(), p_adjlist1->second.first.end(), p_adjlist2->first.label);
+    auto neighbornode2 = std::find(p_adjlist2->second.first.begin(), p_adjlist2->second.first.end(), p_adjlist1->first.label);
 
     // if neither are end pointers, then they are neighbors
-    if (neighbornode1 != p_adjlist1->second.end() && neighbornode2 != p_adjlist2->second.end()) {
+    if (neighbornode1 != p_adjlist1->second.first.end() && neighbornode2 != p_adjlist2->second.first.end()) {
         return true;
-    } else {
-        return false;
-    }
+    } 
+    return false;
+}
+*/
+
+
+void add_adjlist(GraphRepresenter & graph, AdjacencyList adjlist) {
+    graph.push_back(adjlist);
 }
 
 
+AdjacencyList make_adjlist(Vertex homevertex, std::vector<Vertex>vertlist, std::vector<double> weightlist) {
+    size_t vlistsize = vertlist.size();
+    size_t wlistsize = weightlist.size();
+    if (vlistsize != wlistsize) {
+        printf("vertlist and weightlist have different sizes (%lu, %lu).\n", vlistsize, wlistsize);
+        printf("Quitting...\n");
+        exit(0);
+    }
+    
+    std::vector<PairVertexWeight> vertweightpairs;
+    for (size_t idx = 0; idx < vlistsize; idx++) 
+        vertweightpairs.push_back(std::make_pair(vertlist[idx], weightlist[idx]));    
+    return std::make_pair(homevertex, vertweightpairs);
+}
